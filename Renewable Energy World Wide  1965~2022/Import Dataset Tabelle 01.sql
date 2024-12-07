@@ -5,6 +5,9 @@ CREATE TABLE renewable_Share_Energy (
     Renewables (% equivalent primary energy)	DOUBLE
 );
 
+aaaaaaaaaaaaa
+
+
 INSERT INTO renewable_Share_Energy (Entity, Code, Year, Renewables (% equivalent primary energy)) VALUES ('Africa', '', '1965', '5.7474947');
 INSERT INTO renewable_Share_Energy (Entity, Code, Year, Renewables (% equivalent primary energy)) VALUES ('Africa', '', '1966', '6.122062');
 INSERT INTO renewable_Share_Energy (Entity, Code, Year, Renewables (% equivalent primary energy)) VALUES ('Africa', '', '1967', '6.325731');
