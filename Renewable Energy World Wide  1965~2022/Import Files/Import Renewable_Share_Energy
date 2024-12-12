@@ -1,4 +1,6 @@
-CREATE TABLE RenewableShareEnergy (
+DROP TABLE if exists RenewableShareEnergy;
+
+CREATE TABLE RenewableShareEnergy ( 
     Entity VARCHAR(512),
     Code VARCHAR(512),
     Year INT,
