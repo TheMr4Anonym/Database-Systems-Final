@@ -1,0 +1,35 @@
+Introduction
+
+-	Our Project: Energy production and consumption across borders, hast he goal of analyzing global energyefficiency, emissions, renewable energy and energytrade between countries
+-	Our central datasources are:
+o	World Energy Consuption
+	Efficiency
+	Emissions
+	Trade
+o	Energy Renewables
+	Production/Consumption 
+	Split up shares between types
+
+Description
+
+-	World energy consumption
+o	Efficiency: Energyintensity on economic performance (kWh/USD)
+o	Emissions: CO2, Methane and other enviromental hazards
+o	Energy Trade: Import/Exports, dependencies between countries
+-	Renewable Energy
+o	Production/Consumption: TWh-Data for Biomass, Solar, Wind and Hydro Power for Trends
+o	Share of renewables: differentiated by Wind, Solar and Hydro/Biomass
+
+
+Connection to the Mondial-Database
+
+-	countryCode (PK) from country connects all our datasets with the mondial database
+-	Energyefficiency and emissions can be connected with economic indicators
+-	Consumption can be connected to the population for consumtion per inhabitant
+-	Energy trade can be compared to production to find export countries for renewables
+
+Interesting to look at:
+
+-	High efficiency often also high renewable share
+-	CO2 intensive countries often high import/export volumes -> could be dependencies
+-	Renewables often vary strongly between continents
