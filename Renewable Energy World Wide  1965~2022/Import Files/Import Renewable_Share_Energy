@@ -1,4 +1,4 @@
-DROP TABLE if exists RenewableShareEnergy;
+DROP TABLE IF EXISTS RenewableShareEnergy;
 
 CREATE TABLE RenewableShareEnergy ( 
     Entity VARCHAR(512),
