@@ -1,9 +1,0 @@
-DROP TABLE IF EXISTS RenewableShareEnergy;
-DROP TABLE IF EXISTS ModernRenewableEnergyConsumption;
-DROP TABLE IF EXISTS ModernRenewableProduction;
-DROP TABLE IF EXISTS ShareElectricityRenewables;
-DROP TABLE IF EXISTS ShareElectricityHydro;
-DROP TABLE IF EXISTS ShareElectricityWind;
-DROP TABLE IF EXISTS ShareElectricitySolar;
-
-
