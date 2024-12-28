@@ -2,10 +2,10 @@ DROP TABLE IF EXISTS GlobalCrudeOilTrade;
 
 CREATE TABLE GlobalCrudeOilTrade (
     Continent	VARCHAR(512),
-    Country	VARCHAR(512),
+    Country		VARCHAR(512),
     TradeValue	DOUBLE PRECISION,
-    Year	INT,
-    Action	VARCHAR(512)
+    Year		INT,
+    Action		VARCHAR(512)
 );
 
 INSERT INTO GlobalCrudeOilTrade (Continent, Country, TradeValue, Year, Action) VALUES
