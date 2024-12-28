@@ -1,0 +1,185 @@
+Ideen von Chatti auf denen wir aufbauen können
+
+
+1. Energieproduktion und -konsum
+1.	Vergleich der Energieproduktion pro Land mit deren Konsum:
+sql
+Code kopieren
+SELECT countryName, SUM(renewablesProduction) AS TotalProduction, 
+       SUM(renewablesConsumption) AS TotalConsumption,
+       (SUM(renewablesProduction) - SUM(renewablesConsumption)) AS NetBalance
+FROM renewablesProduction
+JOIN renewablesConsumption USING (countryCode, year)
+GROUP BY countryName
+HAVING NetBalance > 0; -- Länder mit Produktionsüberschuss
+2.	Ermittlung der Länder mit der höchsten Abhängigkeit von Energieimporten:
+sql
+Code kopieren
+SELECT countryName, (energyImport / (energyImport + energyProduction)) * 100 AS DependencyRate
+FROM energyTrade
+JOIN country USING (countryCode)
+WHERE year = 2020
+ORDER BY DependencyRate DESC
+LIMIT 10;
+3.	Korrelation zwischen Energieintensität und Wirtschaftswachstum:
+sql
+Code kopieren
+SELECT countryName, AVG(energyIntensity) AS AvgEnergyIntensity, AVG(gdp_growth) AS AvgGDPGrowth
+FROM energyEfficiency
+JOIN economy USING (countryCode, year)
+GROUP BY countryName
+HAVING AVG(gdp_growth) > 0
+ORDER BY AvgEnergyIntensity ASC;
+________________________________________
+2. Erneuerbare Energien
+4.	Länder mit dem höchsten Anteil erneuerbarer Energien an der Gesamtenergieproduktion:
+sql
+Code kopieren
+SELECT countryName, 
+       (SUM(renewablesProduction) / (SUM(renewablesProduction) + energyProduction)) * 100 AS RenewablesShare
+FROM renewablesProduction
+JOIN energyTrade USING (countryCode, year)
+GROUP BY countryName
+ORDER BY RenewablesShare DESC
+LIMIT 10;
+5.	Anteil von Solar- vs. Windenergie in den letzten 5 Jahren (pro Land):
+sql
+Code kopieren
+SELECT countryName, year, 
+       SUM(Solar) AS TotalSolar, SUM(Wind) AS TotalWind,
+       (SUM(Solar) / (SUM(Solar) + SUM(Wind))) * 100 AS SolarShare,
+       (SUM(Wind) / (SUM(Solar) + SUM(Wind))) * 100 AS WindShare
+FROM renewablesProduction
+GROUP BY countryName, year
+HAVING year >= 2015;
+6.	Trends in der Solarenergieproduktion über die letzten 10 Jahre:
+sql
+Code kopieren
+SELECT year, SUM(Solar) AS TotalSolarProduction
+FROM renewablesProduction
+GROUP BY year
+ORDER BY year ASC;
+________________________________________
+3. Emissionen
+7.	Länder mit den höchsten CO₂-Emissionen im Vergleich zu ihrem Anteil an erneuerbaren Energien:
+sql
+Code kopieren
+SELECT countryName, SUM(CO2Emissions) AS TotalCO2, 
+       AVG(percentageRenew) AS AvgRenewablesShare
+FROM emissions
+JOIN shareRenewables USING (countryCode, year)
+GROUP BY countryName
+HAVING TotalCO2 > 500 AND AvgRenewablesShare < 20; -- Filter für hohe Emissionen und geringe erneuerbare Anteile
+8.	Vergleich von Methan- und CO₂-Emissionen über Kontinente:
+sql
+Code kopieren
+SELECT continent, SUM(CO2Emissions) AS TotalCO2, SUM(methaneEmissions) AS TotalMethane
+FROM emissions
+JOIN encompasses USING (countryCode)
+GROUP BY continent;
+________________________________________
+4. Energieeffizienz
+9.	Länder mit der besten Energieeffizienz pro Wirtschaftssektor (Agrar, Industrie, Service):
+sql
+Code kopieren
+SELECT countryName, sector, MIN(energyIntensity) AS BestEfficiency
+FROM energyEfficiency
+JOIN economy USING (countryCode, year)
+WHERE sector IN ('Agriculture', 'Industry', 'Service')
+GROUP BY countryName, sector;
+10.	Trends in der Energieeffizienz in der Europäischen Union:
+sql
+Code kopieren
+SELECT year, AVG(energyIntensity) AS AvgEfficiencyEU
+FROM energyEfficiency
+JOIN encompasses USING (countryCode)
+WHERE continent = 'Europe'
+GROUP BY year
+ORDER BY year ASC;
+________________________________________
+5. Länderübergreifende Handelsströme
+11.	Länder mit dem größten Netto-Energieexport (Export minus Import):
+sql
+Code kopieren
+SELECT countryName, (SUM(energyExport) - SUM(energyImport)) AS NetExport
+FROM energyTrade
+GROUP BY countryName
+ORDER BY NetExport DESC
+LIMIT 10;
+12.	Analyse des Energiehandels zwischen Kontinenten:
+sql
+Code kopieren
+SELECT continent, SUM(energyExport) AS TotalExport, SUM(energyImport) AS TotalImport
+FROM energyTrade
+JOIN encompasses USING (countryCode)
+GROUP BY continent;
+________________________________________
+6. Kombination von Faktoren
+13.	Länder mit den höchsten CO₂-Emissionen und geringem Anteil erneuerbarer Energien:
+sql
+Code kopieren
+SELECT countryName, AVG(CO2Emissions) AS AvgCO2, AVG(percentageRenew) AS AvgRenewables
+FROM emissions
+JOIN shareRenewables USING (countryCode, year)
+GROUP BY countryName
+HAVING AvgCO2 > 300 AND AvgRenewables < 15;
+14.	Vergleich zwischen Entwicklungsländern und Industrienationen in Bezug auf Energieeffizienz:
+sql
+Code kopieren
+SELECT countryName, AVG(energyIntensity) AS AvgEfficiency, gdp_per_capita
+FROM energyEfficiency
+JOIN economy USING (countryCode)
+WHERE gdp_per_capita > 10000 OR gdp_per_capita < 3000
+GROUP BY countryName;
+________________________________________
+7. Langfristige Trends
+15.	Trends in der Produktion erneuerbarer Energien über 10 Jahre:
+sql
+Code kopieren
+SELECT year, SUM(Wind + Solar + GeoBiomass) AS RenewablesProduction
+FROM renewablesProduction
+GROUP BY year
+ORDER BY year ASC;
+16.	Analyse des Anteils erneuerbarer Energien in Ländern mit steigender Bevölkerung:
+sql
+Code kopieren
+SELECT countryName, AVG(percentageRenew) AS AvgRenewables, population_growth
+FROM shareRenewables
+JOIN countryPop USING (countryCode)
+GROUP BY countryName
+HAVING population_growth > 1;
+17.	Analyse von Handelsströmen in Ländern mit hohen Methan-Emissionen:
+sql
+Code kopieren
+SELECT countryName, SUM(energyExport) AS TotalExport, SUM(methaneEmissions) AS Methane
+FROM energyTrade
+JOIN emissions USING (countryCode, year)
+GROUP BY countryName
+HAVING Methane > 50;
+________________________________________
+8. Globale Vergleiche
+18.	Top 10 Länder mit dem höchsten Solar-Anteil an erneuerbarer Energieproduktion:
+sql
+Code kopieren
+SELECT countryName, (SUM(Solar) / SUM(Solar + Wind + Hydro)) * 100 AS SolarShare
+FROM renewablesProduction
+GROUP BY countryName
+ORDER BY SolarShare DESC
+LIMIT 10;
+19.	Vergleich von Emissionen und Handelsströmen für G20-Länder:
+sql
+Code kopieren
+SELECT countryName, SUM(CO2Emissions) AS TotalEmissions, 
+       SUM(energyImport) AS TotalImport, SUM(energyExport) AS TotalExport
+FROM emissions
+JOIN energyTrade USING (countryCode, year)
+WHERE countryName IN ('USA', 'China', 'Germany', ...); -- G20-Länder
+20.	Analyse des Anstiegs erneuerbarer Energien im Vergleich zu fossilen Brennstoffen:
+sql
+Code kopieren
+SELECT year, SUM(renewablesProduction) AS TotalRenewables, 
+       SUM(energyProduction - renewablesProduction) AS FossilProduction
+FROM renewablesProduction
+JOIN energyTrade USING (countryCode, year)
+GROUP BY year
+ORDER BY year ASC;
