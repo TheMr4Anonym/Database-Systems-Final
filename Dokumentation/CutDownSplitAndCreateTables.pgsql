@@ -69,7 +69,7 @@ FROM student69.worldenergyconsumption;
 
 ALTER TABLE student69.allrenewables ADD COLUMN renewbalesId SERIAL PRIMARY KEY;
 
-ALTER TABLE student69.allrenewabkes ADD CONSTRAINT fk_country_allrenewables
+ALTER TABLE student69.allrenewables ADD CONSTRAINT fk_country_allrenewables
 FOREIGN KEY (countryCode) REFERENCES mondial.country(code)
 ON DELETE CASCADE;
 
