@@ -1,18 +1,18 @@
-DELETE FROM student69.worldenergyconsumption WHERE year < 2000;
-DELETE FROM student69.worldenergyconsumption WHERE iso_code is NULL;
+DELETE FROM worldenergyconsumption WHERE year < 2000;
+DELETE FROM worldenergyconsumption WHERE iso_code is NULL;
 
-ALTER TABLE student69.worldenergyconsumption
+ALTER TABLE worldenergyconsumption
 ALTER COLUMN iso_code TYPE VARCHAR(4);
 
-DROP TABLE IF EXISTS student69.efficiency;
-DROP TABLE IF EXISTS student69.emissions;
-DROP TABLE IF EXISTS student69.energytrade;
-DROP TABLE IF EXISTS student69.allrenewables;
-DROP TABLE IF EXISTS student69.windenergy;
-DROP TABLE IF EXISTS student69.solarenergy;
-DROP TABLE IF EXISTS student69.hydroenergy;
-DROP TABLE IF EXISTS student69.biofuelenergy;
-DROP TABLE IF EXISTS student69.otherrenewables;
+DROP TABLE IF EXISTS efficiency;
+DROP TABLE IF EXISTS emissions;
+DROP TABLE IF EXISTS energytrade;
+DROP TABLE IF EXISTS allrenewables;
+DROP TABLE IF EXISTS windenergy;
+DROP TABLE IF EXISTS solarenergy;
+DROP TABLE IF EXISTS hydroenergy;
+DROP TABLE IF EXISTS biofuelenergy;
+DROP TABLE IF EXISTS otherrenewables;
 
 
 CREATE TABLE efficiency AS
@@ -22,7 +22,7 @@ SELECT
     energy_per_capita, 
     energy_per_gdp, 
     per_capita_electricity 
-FROM student69.worldenergyconsumption;
+FROM worldenergyconsumption;
 
 CREATE TABLE emissions AS
 SELECT 
@@ -30,7 +30,7 @@ SELECT
     year, 
     carbon_intensity_elec, 
     greenhouse_gas_emissions 
-FROM student69.worldenergyconsumption;
+FROM worldenergyconsumption;
 
 CREATE TABLE energytrade AS
 SELECT 
@@ -38,7 +38,7 @@ SELECT
     year, 
     net_elec_imports, 
     net_elec_imports_share_demand 
-FROM student69.worldenergyconsumption;
+FROM worldenergyconsumption;
 
 CREATE TABLE allRenewables AS
 SELECT 
@@ -47,7 +47,7 @@ SELECT
     renewables_consumption, 
     renewables_electricity, 
     renewables_share_elec
-FROM student69.worldenergyconsumption;
+FROM worldenergyconsumption;
 
 CREATE TABLE windenergy AS
 SELECT 
@@ -56,7 +56,7 @@ SELECT
     wind_consumption, 
     wind_electricity, 
     wind_share_elec
-FROM student69.worldenergyconsumption;
+FROM worldenergyconsumption;
 
 CREATE TABLE solarenergy AS
 SELECT 
@@ -65,7 +65,7 @@ SELECT
     solar_consumption, 
     solar_electricity, 
     solar_share_elec
-FROM student69.worldenergyconsumption;
+FROM worldenergyconsumption;
 
 CREATE TABLE hydroenergy AS
 SELECT 
@@ -74,7 +74,7 @@ SELECT
     hydro_consumption, 
     hydro_electricity, 
     hydro_share_elec  
-FROM student69.worldenergyconsumption;
+FROM worldenergyconsumption;
 
 CREATE TABLE biofuelenergy AS
 SELECT 
@@ -83,7 +83,7 @@ SELECT
     biofuel_consumption, 
     biofuel_electricity, 
     biofuel_share_elec
-FROM student69.worldenergyconsumption;
+FROM worldenergyconsumption;
 
 CREATE TABLE otherRenewables AS
 SELECT 
@@ -92,4 +92,4 @@ SELECT
     other_renewable_consumption, 
     other_renewable_electricity, 
     other_renewables_share_elec 
-FROM student69.worldenergyconsumption;
+FROM worldenergyconsumption;
