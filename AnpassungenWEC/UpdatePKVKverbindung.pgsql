@@ -174,3 +174,9 @@ UPDATE student69.worldenergyconsumption SET iso_code = 'WSA' WHERE iso_code = 'E
 UPDATE student69.worldenergyconsumption SET iso_code = 'YE' WHERE iso_code = 'YEM';
 UPDATE student69.worldenergyconsumption SET iso_code = 'Z' WHERE iso_code = 'ZMB';
 UPDATE student69.worldenergyconsumption SET iso_code = 'ZW' WHERE iso_code = 'ZWE';
+
+DELETE FROM student69.worldenergyconsumption
+WHERE iso_code NOT IN (
+    SELECT code
+    FROM public.country
+);

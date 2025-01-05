@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS student69.biofuelenergy;
 DROP TABLE IF EXISTS student69.otherrenewables;
 
 
-CREATE TABLE Efficiency AS
+CREATE TABLE efficiency AS
 SELECT 
     iso_code AS countryCode,
     year, 
@@ -24,15 +24,7 @@ SELECT
     per_capita_electricity 
 FROM student69.worldenergyconsumption;
 
-ALTER TABLE student69.efficiency ADD COLUMN EfficencyId SERIAL PRIMARY KEY;
-
-ALTER TABLE student69.efficiency 
-ADD CONSTRAINT fk_country_efficiency
-FOREIGN KEY (countryCode) 
-REFERENCES public.country(code)
-ON DELETE CASCADE;
-
-CREATE TABLE Emissions AS
+CREATE TABLE emissions AS
 SELECT 
     iso_code AS countryCode, 
     year, 
@@ -40,7 +32,7 @@ SELECT
     greenhouse_gas_emissions 
 FROM student69.worldenergyconsumption;
 
-CREATE TABLE Energytrade AS
+CREATE TABLE energytrade AS
 SELECT 
     iso_code AS countryCode, 
     year, 
@@ -48,7 +40,7 @@ SELECT
     net_elec_imports_share_demand 
 FROM student69.worldenergyconsumption;
 
-CREATE TABLE AllRenewables AS
+CREATE TABLE allRenewables AS
 SELECT 
     iso_code AS countryCode, 
     year, 
@@ -57,7 +49,7 @@ SELECT
     renewables_share_elec
 FROM student69.worldenergyconsumption;
 
-CREATE TABLE Windenergy AS
+CREATE TABLE windenergy AS
 SELECT 
     iso_code AS countryCode, 
     year, 
@@ -66,7 +58,7 @@ SELECT
     wind_share_elec
 FROM student69.worldenergyconsumption;
 
-CREATE TABLE Solarenergy AS
+CREATE TABLE solarenergy AS
 SELECT 
     iso_code AS countryCode, 
     year, 
@@ -75,7 +67,7 @@ SELECT
     solar_share_elec
 FROM student69.worldenergyconsumption;
 
-CREATE TABLE Hydroenergy AS
+CREATE TABLE hydroenergy AS
 SELECT 
     iso_code AS countryCode, 
     year, 
@@ -84,7 +76,7 @@ SELECT
     hydro_share_elec  
 FROM student69.worldenergyconsumption;
 
-CREATE TABLE Biofuelenergy AS
+CREATE TABLE biofuelenergy AS
 SELECT 
     iso_code AS countryCode,
     year, 
@@ -93,7 +85,7 @@ SELECT
     biofuel_share_elec
 FROM student69.worldenergyconsumption;
 
-CREATE TABLE OtherRenewables AS
+CREATE TABLE otherRenewables AS
 SELECT 
     iso_code AS countryCode, 
     year, 
