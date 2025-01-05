@@ -40,14 +40,6 @@ SELECT
     greenhouse_gas_emissions 
 FROM student69.worldenergyconsumption;
 
-ALTER TABLE student69.emissions ADD COLUMN EmissionsId SERIAL PRIMARY KEY;
-
-ALTER TABLE student69.emissions 
-ADD CONSTRAINT fk_country_emissions
-FOREIGN KEY (countryCode) 
-REFERENCES public.country(code)
-ON DELETE CASCADE;
-
 CREATE TABLE Energytrade AS
 SELECT 
     iso_code AS countryCode, 
@@ -55,12 +47,6 @@ SELECT
     net_elec_imports, 
     net_elec_imports_share_demand 
 FROM student69.worldenergyconsumption;
-
-ALTER TABLE student69.energytrade ADD COLUMN TradeId SERIAL PRIMARY KEY;
-
-ALTER TABLE student69.energytrade ADD CONSTRAINT fk_country_energytrade
-FOREIGN KEY (countryCode) REFERENCES public.country(code)
-ON DELETE CASCADE;
 
 CREATE TABLE AllRenewables AS
 SELECT 
@@ -71,12 +57,6 @@ SELECT
     renewables_share_elec
 FROM student69.worldenergyconsumption;
 
-ALTER TABLE student69.allrenewables ADD COLUMN renewbalesId SERIAL PRIMARY KEY;
-
-ALTER TABLE student69.allrenewables ADD CONSTRAINT fk_country_allrenewables
-FOREIGN KEY (countryCode) REFERENCES public.country(code)
-ON DELETE CASCADE;
-
 CREATE TABLE Windenergy AS
 SELECT 
     iso_code AS countryCode, 
@@ -85,12 +65,6 @@ SELECT
     wind_electricity, 
     wind_share_elec
 FROM student69.worldenergyconsumption;
-
-ALTER TABLE student69.windenergy ADD COLUMN windId SERIAL PRIMARY KEY;
-
-ALTER TABLE student69.windenergy ADD CONSTRAINT fk_country_windenergy
-FOREIGN KEY (countryCode) REFERENCES public.country(code)
-ON DELETE CASCADE;
 
 CREATE TABLE Solarenergy AS
 SELECT 
@@ -101,12 +75,6 @@ SELECT
     solar_share_elec
 FROM student69.worldenergyconsumption;
 
-ALTER TABLE student69.solarenergy ADD COLUMN solarId SERIAL PRIMARY KEY;
-
-ALTER TABLE student69.solarenergy ADD CONSTRAINT fk_country_solarenergy
-FOREIGN KEY (countryCode) REFERENCES public.country(code)
-ON DELETE CASCADE;
-
 CREATE TABLE Hydroenergy AS
 SELECT 
     iso_code AS countryCode, 
@@ -115,12 +83,6 @@ SELECT
     hydro_electricity, 
     hydro_share_elec  
 FROM student69.worldenergyconsumption;
-
-ALTER TABLE student69.hydroenergy ADD COLUMN hydroId SERIAL PRIMARY KEY;
-
-ALTER TABLE student69.hydroenergy ADD CONSTRAINT fk_country_hydroenergy
-FOREIGN KEY (countryCode) REFERENCES public.country(code)
-ON DELETE CASCADE;
 
 CREATE TABLE Biofuelenergy AS
 SELECT 
@@ -131,12 +93,6 @@ SELECT
     biofuel_share_elec
 FROM student69.worldenergyconsumption;
 
-ALTER TABLE student69.biofuelenergy ADD COLUMN biofuelId SERIAL PRIMARY KEY;
-
-ALTER TABLE student69.biofuelenergy ADD CONSTRAINT fk_country_biofuelenergy
-FOREIGN KEY (countryCode) REFERENCES public.country(code)
-ON DELETE CASCADE;
-
 CREATE TABLE OtherRenewables AS
 SELECT 
     iso_code AS countryCode, 
@@ -145,9 +101,3 @@ SELECT
     other_renewable_electricity, 
     other_renewables_share_elec 
 FROM student69.worldenergyconsumption;
-
-ALTER TABLE student69.otherrenewables ADD COLUMN otherRenewablesId SERIAL PRIMARY KEY;
-
-ALTER TABLE student69.otherrenewables ADD CONSTRAINT fk_country_otherrenewables
-FOREIGN KEY (countryCode) REFERENCES public.country(code)
-ON DELETE CASCADE;
