@@ -4,6 +4,13 @@ DELETE FROM worldenergyconsumption WHERE iso_code is NULL;
 ALTER TABLE worldenergyconsumption
 ALTER COLUMN iso_code TYPE VARCHAR(4);
 
+
+DELETE FROM worldenergyconsumption
+WHERE iso_code NOT IN (
+    SELECT code
+    FROM public.country
+);
+
 DROP TABLE IF EXISTS efficiency;
 DROP TABLE IF EXISTS emissions;
 DROP TABLE IF EXISTS energytrade;
