@@ -11,10 +11,10 @@ sql
 Code kopieren
 SELECT c.name, s.solar_share_elec, w.wind_share_elec, h.hydro_share_elec, e.net_elec_imports
 FROM solarenergy s
-JOIN windenergy w ON s.countryCode = w.countryCode AND s.year = w.year
-JOIN hydroenergy h ON s.countryCode = h.countryCode AND s.year = h.year
-JOIN energytrade e ON s.countryCode = e.countryCode AND s.year = e.year
-JOIN country c ON s.countryCode = c.code
+JOIN windenergy w ON s.code = w.code AND s.year = w.year
+JOIN hydroenergy h ON s.code = h.code AND s.year = h.year
+JOIN energytrade e ON s.code = e.code AND s.year = e.year
+JOIN country c ON s.code = c.code
 WHERE s.year = 2022;
 5. Trendanalyse: Wachstum erneuerbarer Energien und Rückgang der CO₂-Emissionen (2010–2022)
 
@@ -25,8 +25,8 @@ sql
 Code kopieren
 SELECT c.name, w.wind_share_elec, e.net_elec_imports
 FROM windenergy w
-JOIN energytrade e ON w.countryCode = e.countryCode AND w.year = e.year
-JOIN country c ON w.countryCode = c.code
+JOIN energytrade e ON w.code = e.code AND w.year = e.year
+JOIN country c ON w.code = c.code
 WHERE w.year = 2022
 ORDER BY w.wind_share_elec DESC;
 8. Zusammenhang zwischen Energieverbrauch pro Kopf und Anteil erneuerbarer Energien
@@ -34,27 +34,5 @@ ORDER BY w.wind_share_elec DESC;
 9. Länder mit minimalen Energieimporten und ihren Hauptquellen erneuerbarer Energie
 Query:
 
-sql
-Code kopieren
-SELECT c.name, e.net_elec_imports, MAX(s.solar_share_elec) AS solar, MAX(w.wind_share_elec) AS wind, MAX(h.hydro_share_elec) AS hydro
-FROM energytrade e
-JOIN solarenergy s ON e.countryCode = s.countryCode AND e.year = s.year
-JOIN windenergy w ON e.countryCode = w.countryCode AND e.year = w.year
-JOIN hydroenergy h ON e.countryCode = h.countryCode AND e.year = h.year
-JOIN country c ON e.countryCode = c.code
-WHERE e.year = 2022
-GROUP BY c.name, e.net_elec_imports
-ORDER BY e.net_elec_imports ASC
-LIMIT 10;
 10. Regionale Unterschiede: Anteil erneuerbarer Energien und CO₂-Emissionen auf Kontinent-Ebene
 Query:
-
-sql
-Code kopieren
-SELECT e.continent, AVG(a.renewables_share_elec) AS avg_renewables, AVG(em.carbon_intensity_elec) AS avg_carbon
-FROM allrenewables a
-JOIN emissions em ON a.countryCode = em.countryCode AND a.year = em.year
-JOIN encompasses e ON a.countryCode = e.country
-WHERE a.year = 2022
-GROUP BY e.continent
-ORDER BY avg_renewables DESC;
