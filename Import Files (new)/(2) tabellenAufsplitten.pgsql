@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 DELETE FROM worldenergyconsumption WHERE year < 1950
+=======
+DELETE FROM worldenergyconsumption WHERE year < 1950;
+DELETE FROM worldenergyconsumption;
+>>>>>>> 29180528f031a544ec2c4f49395bb955dd8a4781
 DELETE FROM worldenergyconsumption WHERE iso_code is NULL;
 
 ALTER TABLE worldenergyconsumption
