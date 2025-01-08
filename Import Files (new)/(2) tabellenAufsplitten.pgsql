@@ -1,15 +1,8 @@
-DELETE FROM worldenergyconsumption WHERE year < 2000;
+DELETE FROM worldenergyconsumption WHERE year < 1950;
 DELETE FROM worldenergyconsumption WHERE iso_code is NULL;
 
 ALTER TABLE worldenergyconsumption
 ALTER COLUMN iso_code TYPE VARCHAR(4);
-
-
-DELETE FROM worldenergyconsumption
-WHERE iso_code NOT IN (
-    SELECT code
-    FROM public.country
-);
 
 DROP TABLE IF EXISTS efficiency;
 DROP TABLE IF EXISTS emissions;
