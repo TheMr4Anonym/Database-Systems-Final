@@ -65,16 +65,7 @@ WHERE a.year BETWEEN 2010 AND 2022
 GROUP BY e.continent, a.year
 ORDER BY e.continent, a.year;
 6. Korrelation zwischen Nettoimporten und Erneuerbaren
-sql
-Code kopieren
-SELECT 
-    e.continent,
-    ROUND(CORR(a.renewables_share_elec, et.net_elec_imports), 2) AS correlation
-FROM allrenewables a
-JOIN energytrade et ON a.code = et.code AND a.year = et.year
-JOIN encompasses e ON a.code = e.country
-WHERE a.year BETWEEN 2010 AND 2022
-GROUP BY e.continent;
+
 7. Hauptenergiequellen pro Kontinent
 sql
 Code kopieren
