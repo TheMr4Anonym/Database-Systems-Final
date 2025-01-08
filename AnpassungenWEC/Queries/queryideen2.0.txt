@@ -1,0 +1,126 @@
+1. Top-5 Länder mit dem höchsten Verbrauch an erneuerbaren Energien
+
+SELECT country, SUM(renewables_consumption) AS total_consumption
+FROM allrenewables
+GROUP BY country
+ORDER BY total_consumption DESC
+LIMIT 5;
+2. Vergleich der Anteile erneuerbarer Energien in Elektrizität zwischen Kontinenten
+
+SELECT encompasses.continent, AVG(allrenewables.renewables_share_elec) AS avg_share
+FROM allrenewables
+JOIN encompasses ON allrenewables.countryCode = encompasses.country
+GROUP BY encompasses.continent;
+3. Entwicklung der Windenergie-Produktion eines spezifischen Landes
+
+SELECT year, wind_consumption
+FROM windenergy
+WHERE countryCode = 'USA'
+ORDER BY year;
+4. Länder mit positiven Net Energy Imports
+
+SELECT country, net_elec_imports
+FROM energytrade
+WHERE net_elec_imports > 0;
+5. Top-Länder mit der höchsten Pro-Kopf-Nutzung von Solarenergie
+
+SELECT country, AVG(solar_electricity) AS avg_solar
+FROM solarenergy
+GROUP BY country
+ORDER BY avg_solar DESC
+LIMIT 5;
+6. Zusammenhang zwischen CO2-Emissionen und Anteil erneuerbarer Energien
+
+SELECT e.countryCode, e.carbon_intensity_elec, r.renewables_share_elec
+FROM emissions e
+JOIN allrenewables r ON e.countryCode = r.countryCode
+WHERE e.year = r.year;
+7. Länder mit dem höchsten Anteil an Wasserkraft im Energiemix
+
+SELECT country, hydro_share_elec
+FROM hydroenergy
+WHERE year = 2022
+ORDER BY hydro_share_elec DESC
+LIMIT 5;
+8. Pro-Kopf-Vergleich von Energieverbrauch zwischen Entwicklungsländern und Industrieländern
+
+SELECT encompasses.continent, AVG(efficiency.energy_per_capita) AS avg_energy_per_capita
+FROM efficiency
+JOIN encompasses ON efficiency.countryCode = encompasses.country
+GROUP BY encompasses.continent;
+9. Verlauf der CO2-Emissionen in einem Land
+
+SELECT year, greenhouse_gas_emissions
+FROM emissions
+WHERE countryCode = 'DEU'
+ORDER BY year;
+10. Länder mit den höchsten Investitionen in Solarenergie
+
+SELECT country, SUM(solar_consumption) AS total_solar
+FROM solarenergy
+GROUP BY country
+ORDER BY total_solar DESC
+LIMIT 10;
+11. Vergleich der Energieproduktion aus Bioenergie zwischen Kontinenten
+
+SELECT encompasses.continent, SUM(biofuel_consumption) AS total_biofuel
+FROM biofuelenergy
+JOIN encompasses ON biofuelenergy.countryCode = encompasses.country
+GROUP BY encompasses.continent;
+12. Länder mit der höchsten jährlichen Wachstumsrate an erneuerbaren Energien
+
+SELECT country, MAX(renewables_consumption) - MIN(renewables_consumption) AS growth
+FROM allrenewables
+GROUP BY country
+ORDER BY growth DESC
+LIMIT 5;
+13. Einfluss der Bevölkerungsgröße auf den Verbrauch erneuerbarer Energien
+
+SELECT country, population, renewables_consumption
+FROM country
+JOIN allrenewables ON country.code = allrenewables.countryCode
+WHERE year = 2022
+ORDER BY renewables_consumption DESC;
+14. Länder mit negativer Nettoenergie-Bilanz
+
+SELECT country, net_elec_imports
+FROM energytrade
+WHERE net_elec_imports < 0;
+15. Durchschnittlicher Anteil erneuerbarer Energien über die letzten 10 Jahre
+
+SELECT country, AVG(renewables_share_elec) AS avg_renewables
+FROM allrenewables
+WHERE year BETWEEN 2012 AND 2022
+GROUP BY country;
+16. Verbrauch fossiler Energien im Vergleich zu erneuerbaren Energien
+
+SELECT country, SUM(renewables_consumption) AS renewables, SUM(fossil_fuel_consumption) AS fossil
+FROM allrenewables
+JOIN efficiency ON allrenewables.countryCode = efficiency.countryCode
+GROUP BY country
+ORDER BY fossil DESC;
+17. Anzahl der Länder mit mehr als 50 % erneuerbare Energie
+
+SELECT COUNT(*)
+FROM allrenewables
+WHERE renewables_share_elec > 50;
+18. Länder mit dem größten Potenzial für erneuerbare Energien
+
+SELECT country, renewables_consumption / area AS potential
+FROM country
+JOIN allrenewables ON country.code = allrenewables.countryCode
+WHERE year = 2022
+ORDER BY potential DESC
+LIMIT 5;
+19. Korrelation zwischen Wirtschaftskraft (GDP) und Energieverbrauch
+
+SELECT efficiency.gdp, efficiency.energy_per_capita
+FROM efficiency
+WHERE year = 2022;
+20. Top-Länder mit dem höchsten Anteil von Solarenergie an der Elektrizität
+
+SELECT country, solar_share_elec
+FROM solarenergy
+WHERE year = 2022
+ORDER BY solar_share_elec DESC
+LIMIT 5;
