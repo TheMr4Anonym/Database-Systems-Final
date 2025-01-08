@@ -174,3 +174,6 @@ UPDATE worldenergyconsumption SET iso_code = 'WSA' WHERE iso_code = 'ESH';
 UPDATE worldenergyconsumption SET iso_code = 'YE' WHERE iso_code = 'YEM';
 UPDATE worldenergyconsumption SET iso_code = 'Z' WHERE iso_code = 'ZMB';
 UPDATE worldenergyconsumption SET iso_code = 'ZW' WHERE iso_code = 'ZWE';
+
+DELETE FROM worldenergyconsumption
+WHERE iso_code IN ('ATA', 'PSE', 'TLS', 'ANT', 'VIR');
