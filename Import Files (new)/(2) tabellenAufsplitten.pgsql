@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS otherrenewables;
 
 CREATE TABLE efficiency AS
 SELECT 
-    iso_code AS countryCode,
+    iso_code AS code,
     year, 
     energy_per_capita, 
     energy_per_gdp, 
@@ -26,7 +26,7 @@ FROM worldenergyconsumption;
 
 CREATE TABLE emissions AS
 SELECT 
-    iso_code AS countryCode, 
+    iso_code AS code, 
     year, 
     carbon_intensity_elec, 
     greenhouse_gas_emissions 
@@ -34,7 +34,7 @@ FROM worldenergyconsumption;
 
 CREATE TABLE energytrade AS
 SELECT 
-    iso_code AS countryCode, 
+    iso_code AS code, 
     year, 
     net_elec_imports, 
     net_elec_imports_share_demand 
@@ -42,7 +42,7 @@ FROM worldenergyconsumption;
 
 CREATE TABLE allRenewables AS
 SELECT 
-    iso_code AS countryCode, 
+    iso_code AS code, 
     year, 
     renewables_consumption, 
     renewables_electricity, 
@@ -51,7 +51,7 @@ FROM worldenergyconsumption;
 
 CREATE TABLE windenergy AS
 SELECT 
-    iso_code AS countryCode, 
+    iso_code AS code, 
     year, 
     wind_consumption, 
     wind_electricity, 
@@ -60,7 +60,7 @@ FROM worldenergyconsumption;
 
 CREATE TABLE solarenergy AS
 SELECT 
-    iso_code AS countryCode, 
+    iso_code AS code, 
     year, 
     solar_consumption, 
     solar_electricity, 
@@ -69,7 +69,7 @@ FROM worldenergyconsumption;
 
 CREATE TABLE hydroenergy AS
 SELECT 
-    iso_code AS countryCode, 
+    iso_code AS code, 
     year, 
     hydro_consumption, 
     hydro_electricity, 
@@ -78,7 +78,7 @@ FROM worldenergyconsumption;
 
 CREATE TABLE biofuelenergy AS
 SELECT 
-    iso_code AS countryCode,
+    iso_code AS code,
     year, 
     biofuel_consumption, 
     biofuel_electricity, 
@@ -87,7 +87,7 @@ FROM worldenergyconsumption;
 
 CREATE TABLE otherRenewables AS
 SELECT 
-    iso_code AS countryCode, 
+    iso_code AS code, 
     year, 
     other_renewable_consumption, 
     other_renewable_electricity, 
