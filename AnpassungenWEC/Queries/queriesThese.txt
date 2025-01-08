@@ -30,16 +30,7 @@ JOIN country c ON w.countryCode = c.code
 WHERE w.year = 2022
 ORDER BY w.wind_share_elec DESC;
 8. Zusammenhang zwischen Energieverbrauch pro Kopf und Anteil erneuerbarer Energien
-Query:
 
-sql
-Code kopieren
-SELECT c.name, f.energy_per_capita, a.renewables_share_elec
-FROM efficiency f
-JOIN allrenewables a ON f.countryCode = a.countryCode AND f.year = a.year
-JOIN country c ON f.countryCode = c.code
-WHERE f.year = 2022
-ORDER BY f.energy_per_capita DESC;
 9. Länder mit minimalen Energieimporten und ihren Hauptquellen erneuerbarer Energie
 Query:
 
