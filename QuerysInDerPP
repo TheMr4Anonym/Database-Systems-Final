@@ -1,0 +1,53 @@
+3. Share Percentage per Continent
+SELECT 
+    e.continent,
+    AVG(a.renewables_share_elec) AS avg_renewables_share
+FROM 
+    allrenewables a
+JOIN 
+    country c ON a.code = c.code
+JOIN 
+    encompasses e ON c.code = e.country
+WHERE 
+    a.year = 2022 AND a.renewables_share_elec IS NOT NULL
+GROUP BY 
+    e.continent
+ORDER BY 
+    avg_renewables_share DESC;
+
+
+
+4. Continents Percentage Across Borders (Kreisdiagramm)
+WITH TotalRenewables AS (
+    SELECT 
+        SUM(a.renewables_share_elec) AS total_renewables
+    FROM 
+        allrenewables a
+    WHERE 
+        a.year = 2022
+),
+ContinentRenewables AS (
+    SELECT 
+        e.continent,
+        SUM(a.renewables_share_elec) AS continent_renewables
+    FROM 
+        allrenewables a
+    JOIN 
+        country c ON a.code = c.code
+    JOIN 
+        encompasses e ON c.code = e.country
+    WHERE 
+        a.year = 2022
+    GROUP BY 
+        e.continent
+)
+SELECT 
+    cr.continent,
+    cr.continent_renewables,
+    (cr.continent_renewables / tr.total_renewables) * 100 AS percent_share
+FROM 
+    ContinentRenewables cr
+CROSS JOIN 
+    TotalRenewables tr
+ORDER BY 
+    percent_share DESC;
