@@ -32,7 +32,94 @@ ORDER BY w.wind_share_elec DESC;
 8. Zusammenhang zwischen Energieverbrauch pro Kopf und Anteil erneuerbarer Energien
 
 9. Länder mit minimalen Energieimporten und ihren Hauptquellen erneuerbarer Energie
-Query:
 
 10. Regionale Unterschiede: Anteil erneuerbarer Energien und CO₂-Emissionen auf Kontinent-Ebene
-Query:
+
+2. Verhältnis von Erneuerbaren zu Kohlenstoffintensität in den Top-Ländern
+sql
+Code kopieren
+SELECT 
+    c.name AS country_name,
+    a.renewables_share_elec,
+    em.carbon_intensity_elec,
+    ROUND(a.renewables_share_elec / em.carbon_intensity_elec, 2) AS ratio
+FROM allrenewables a
+JOIN emissions em ON a.code = em.code AND a.year = em.year
+JOIN country c ON a.code = c.code
+WHERE a.year = 2022 AND em.carbon_intensity_elec > 0
+ORDER BY ratio DESC
+LIMIT 10; -- Top 10 Länder mit dem besten Verhältnis
+
+4. Top-Exporteure von Strom
+
+5. Entwicklung des Anteils erneuerbarer Energien pro Kontinent
+sql
+Code kopieren
+SELECT 
+    e.continent,
+    a.year,
+    ROUND(AVG(a.renewables_share_elec), 2) AS avg_renewables
+FROM allrenewables a
+JOIN encompasses e ON a.code = e.country
+WHERE a.year BETWEEN 2010 AND 2022
+GROUP BY e.continent, a.year
+ORDER BY e.continent, a.year;
+6. Korrelation zwischen Nettoimporten und Erneuerbaren
+sql
+Code kopieren
+SELECT 
+    e.continent,
+    ROUND(CORR(a.renewables_share_elec, et.net_elec_imports), 2) AS correlation
+FROM allrenewables a
+JOIN energytrade et ON a.code = et.code AND a.year = et.year
+JOIN encompasses e ON a.code = e.country
+WHERE a.year BETWEEN 2010 AND 2022
+GROUP BY e.continent;
+7. Hauptenergiequellen pro Kontinent
+sql
+Code kopieren
+SELECT 
+    e.continent,
+    AVG(s.solar_share_elec) AS avg_solar,
+    AVG(w.wind_share_elec) AS avg_wind,
+    AVG(h.hydro_share_elec) AS avg_hydro
+FROM encompasses e
+JOIN solarenergy s ON e.country = s.code
+JOIN windenergy w ON e.country = w.code AND s.year = w.year
+JOIN hydroenergy h ON e.country = h.code AND s.year = h.year
+WHERE s.year = 2022
+GROUP BY e.continent;
+8. Länder mit steigendem Anteil an Erneuerbaren (Trend)
+sql
+Code kopieren
+SELECT 
+    c.name AS country_name,
+    ROUND((MAX(a.renewables_share_elec) - MIN(a.renewables_share_elec)), 2) AS increase
+FROM allrenewables a
+JOIN country c ON a.code = c.code
+WHERE a.year BETWEEN 2010 AND 2022
+GROUP BY c.name
+ORDER BY increase DESC
+LIMIT 10;
+9. Prozentualer Anteil der Erneuerbaren am Gesamtverbrauch
+sql
+Code kopieren
+SELECT 
+    c.name AS country_name,
+    ROUND((a.renewables_consumption / a.total_consumption) * 100, 2) AS percentage
+FROM allrenewables a
+JOIN country c ON a.code = c.code
+WHERE a.year = 2022 AND a.total_consumption IS NOT NULL
+ORDER BY percentage DESC
+LIMIT 10;
+10. Einfluss der Erneuerbaren auf die Kohlenstoffintensität
+sql
+Code kopieren
+SELECT 
+    e.continent,
+    ROUND(COVAR_POP(a.renewables_share_elec, em.carbon_intensity_elec), 2) AS covariance
+FROM allrenewables a
+JOIN emissions em ON a.code = em.code AND a.year = em.year
+JOIN encompasses e ON a.code = e.country
+WHERE a.year BETWEEN 2010 AND 2022
+GROUP BY e.continent;
