@@ -1,37 +1,9 @@
 1. Vergleich des Anteils erneuerbarer Energien und der Nettoenergieimporte pro Land
-Query:
 
-sql
-Code kopieren
-SELECT c.name, a.renewables_share_elec, e.net_elec_imports
-FROM allrenewables a
-JOIN energytrade e ON a.countryCode = e.countryCode AND a.year = e.year
-JOIN country c ON a.countryCode = c.code
-WHERE a.year = 2022
-ORDER BY a.renewables_share_elec DESC;
 2. CO₂-Emissionen in Ländern mit den höchsten Anteilen erneuerbarer Energien
-Query:
 
-sql
-Code kopieren
-SELECT c.name, a.renewables_share_elec, em.carbon_intensity_elec
-FROM allrenewables a
-JOIN emissions em ON a.countryCode = em.countryCode AND a.year = em.year
-JOIN country c ON a.countryCode = c.code
-WHERE a.year = 2022
-ORDER BY a.renewables_share_elec DESC
-LIMIT 10;
 3. Durchschnittlicher Anteil erneuerbarer Energien und Nettoenergieimporte pro Kontinent
-Query:
 
-sql
-Code kopieren
-SELECT e.continent, AVG(a.renewables_share_elec) AS avg_renewables, AVG(et.net_elec_imports) AS avg_imports
-FROM allrenewables a
-JOIN energytrade et ON a.countryCode = et.countryCode AND a.year = et.year
-JOIN encompasses e ON a.countryCode = e.country
-WHERE a.year = 2022
-GROUP BY e.continent;
 4. Verteilung der Energieimporte basierend auf den Hauptquellen erneuerbarer Energie (Solar, Wind, Hydro)
 Query:
 
@@ -45,32 +17,7 @@ JOIN energytrade e ON s.countryCode = e.countryCode AND s.year = e.year
 JOIN country c ON s.countryCode = c.code
 WHERE s.year = 2022;
 5. Trendanalyse: Wachstum erneuerbarer Energien und Rückgang der CO₂-Emissionen (2010–2022)
-Query:
 
-sql
-Code kopieren
-SELECT a.year, AVG(a.renewables_share_elec) AS avg_renewables, AVG(em.carbon_intensity_elec) AS avg_carbon
-FROM allrenewables a
-JOIN emissions em ON a.countryCode = em.countryCode AND a.year = em.year
-WHERE a.year BETWEEN 2010 AND 2022
-GROUP BY a.year
-ORDER BY a.year;
-6. Länder mit überdurchschnittlichem Anteil erneuerbarer Energien und ihren Nettoenergieimporten
-Query:
-
-sql
-Code kopieren
-WITH avg_renewables AS (
-    SELECT AVG(renewables_share_elec) AS avg_renewables
-    FROM allrenewables
-    WHERE year = 2022
-)
-SELECT c.name, a.renewables_share_elec, e.net_elec_imports
-FROM allrenewables a
-JOIN energytrade e ON a.countryCode = e.countryCode AND a.year = e.year
-JOIN country c ON a.countryCode = c.code
-WHERE a.year = 2022 AND a.renewables_share_elec > (SELECT avg_renewables FROM avg_renewables)
-ORDER BY a.renewables_share_elec DESC;
 7. Einfluss von Windenergie auf die Reduzierung der Nettoenergieimporte
 Query:
 
