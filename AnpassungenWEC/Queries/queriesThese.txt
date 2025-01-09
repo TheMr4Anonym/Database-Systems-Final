@@ -67,19 +67,7 @@ ORDER BY e.continent, a.year;
 6. Korrelation zwischen Nettoimporten und Erneuerbaren
 
 7. Hauptenergiequellen pro Kontinent
-sql
-Code kopieren
-SELECT 
-    e.continent,
-    AVG(s.solar_share_elec) AS avg_solar,
-    AVG(w.wind_share_elec) AS avg_wind,
-    AVG(h.hydro_share_elec) AS avg_hydro
-FROM encompasses e
-JOIN solarenergy s ON e.country = s.code
-JOIN windenergy w ON e.country = w.code AND s.year = w.year
-JOIN hydroenergy h ON e.country = h.code AND s.year = h.year
-WHERE s.year = 2022
-GROUP BY e.continent;
+
 8. Länder mit steigendem Anteil an Erneuerbaren (Trend)
 sql
 Code kopieren
