@@ -2,7 +2,7 @@ SELECT
     ar.year AS year, 
     SUM(ar.renewables_consumption) AS global_consumption
 FROM 
-    student69.allrenewables ar
+    allrenewables ar
 WHERE 
     ar.renewables_consumption IS NOT NULL
 GROUP BY 
