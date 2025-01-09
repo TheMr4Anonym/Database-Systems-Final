@@ -1,23 +1,7 @@
-3. Share Percentage per Continent
-SELECT 
-    e.continent,
-    AVG(a.renewables_share_elec) AS avg_renewables_share
-FROM 
-    allrenewables a
-JOIN 
-    country c ON a.code = c.code
-JOIN 
-    encompasses e ON c.code = e.country
-WHERE 
-    a.year = 2022 AND a.renewables_share_elec IS NOT NULL
-GROUP BY 
-    e.continent
-ORDER BY 
-    avg_renewables_share DESC;
+2. 
 
-
-
-4. Continents Percentage Across Borders (Kreisdiagramm)
+3. Continents Percentage Across Borders (Kreisdiagramm) 
+(Fokus auf den Gesamteinfluss jedes Kontinents auf die globale erneuerbare Energieproduktion)
 WITH TotalRenewables AS (
     SELECT 
         SUM(a.renewables_share_elec) AS total_renewables
@@ -51,3 +35,22 @@ CROSS JOIN
     TotalRenewables tr
 ORDER BY 
     percent_share DESC;
+
+
+4. Share Percentage per Continent (Fokus auf den Durchschnitt pro Land innerhalb eines Kontinents.)
+SELECT 
+    e.continent,
+    AVG(a.renewables_share_elec) AS avg_renewables_share
+FROM 
+    allrenewables a
+JOIN 
+    country c ON a.code = c.code
+JOIN 
+    encompasses e ON c.code = e.country
+WHERE 
+    a.year = 2022 AND a.renewables_share_elec IS NOT NULL
+GROUP BY 
+    e.continent
+ORDER BY 
+    avg_renewables_share DESC;
+
